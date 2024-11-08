@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epic Delights Restaurant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+        }
+
+        .menu {
+            padding: 50px 20px;
+            background-color: whitesmoke;
+        }
+
+        .menu h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: darkslategray;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px darkgray;
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .menu-item h3 {
+            margin: 15px 0;
+            color: darkslategray;
+        }
+
+        .menu-item p {
+            color: dimgray;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            color: crimson;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .social-media {
+            background: darkslategray;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .social-media h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: gold;
+        }
+
+        footer {
+            background: black;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .menu-content {
+            padding: 20px;
+        }
+
+        .menu-category {
+            margin-bottom: 30px;
+        }
+
+        .menu-category h3 {
+            color: darkslategray;
+            border-bottom: 2px solid crimson;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .dish {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .dish-name {
+            color: darkslategray;
+            font-weight: bold;
+        }
+
+        .dish-price {
+            color: crimson;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 0;
+            z-index: 1000;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: gold;
+        }
+
+        .menu-item {
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 5px 15px darkgray;
+        }
+
+        .menu-item img {
+            height: 150px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1001;
+        }
+
+        .modal-content {
+            background: white;
+            width: 80%;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close-btn {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+            color: crimson;
+        }
+
+        .recipe-details h3 {
+            color: darkslategray;
+            margin-bottom: 15px;
+        }
+
+        .recipe-details img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            margin: 10px auto;
+            display: block;
+        }
+
+        .ingredients, .instructions {
+            margin: 20px 0;
+        }
+
+        .ingredients ul, .instructions ol {
+            margin-left: 20px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 20px;
+        }
+
+        .about {
+            padding: 80px 20px;
+            background-color: white;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            text-align: center;
+            color: darkslategray;
+            margin-bottom: 40px;
+        }
+
+        .about-content {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-content img {
+            width: 40%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px darkgray;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            color: darkslategray;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: dimgray;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .highlights {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .highlight-item {
+            text-align: center;
+        }
+
+        .highlight-item i {
+            color: crimson;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .contact {
+            padding: 80px 20px;
+            background-color: whitesmoke;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact h2 {
+            text-align: center;
+            color: darkslategray;
+            margin-bottom: 40px;
+        }
+
+        .contact-content {
+            display: flex;
+            gap: 40px;
+        }
+
+        .contact-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .contact-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px darkgray;
+        }
+
+        .contact-item i {
+            color: crimson;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .contact-form {
+            flex: 1;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px darkgray;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid darkgray;
+            border-radius: 5px;
+        }
+
+        .contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .contact-form button {
+            background: crimson;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background: darkred;
+        }
+
+        @media (max-width: 768px) {
+            .about-content,
+            .contact-content {
+                flex-direction: column;
+            }
+
+            .about-content img {
+                width: 100%;
+            }
+        }
+
+        .nav-links a, .nav-center a, .nav-right a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover, .nav-center a:hover, .nav-right a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: gold;
+        }
+
+        .auth-modal {
+            visibility: hidden;
+            opacity: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1002;
+            transition: opacity 0.3s ease;
+        }
+
+        .auth-modal:target {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .close-modal {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            cursor: default;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            text-decoration: none;
+        }
+
+        .auth-content {
+            position: relative;
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .auth-switch a {
+            color: crimson;
+            text-decoration: none;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo span {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-right a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .nav-right a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: gold;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .auth-form input {
+            padding: 12px 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+
+        .auth-form input:focus {
+            border-color: crimson;
+        }
+
+        .auth-form button {
+            background: linear-gradient(45deg, crimson, #ff4757);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .auth-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 20, 60, 0.3);
+        }
+
+        .auth-form button:active {
+            transform: translateY(0);
+        }
+
+        .auth-content {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            margin: 80px auto;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-content h2 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-size: 28px;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: crimson;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .auth-switch a {
+            color: crimson;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+
+        .auth-switch a:hover {
+            color: #ff4757;
+            text-decoration: underline;
+        }
+
+        .password-input {
+            position: relative;
+        }
+
+        .auth-form input[type="password"] {
+            padding-right: 40px;
+        }
+
+        .auth-modal:target .auth-content {
+            animation: modalSlideIn 0.3s ease forwards;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="image.png" class="logo">
+                <img src="image.png" alt="Epic Delights Logo">
+            </a>
+            <div class="nav-center">
+                <a href="#home">Home</a>
+                <a href="#menu">Menu</a>
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="nav-right">
+                <a href="#signInModal" class="sign-in-btn">Sign In</a>
+                <a href="#signUpModal" class="sign-up-btn">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Epic Delights</h1>
+            <p>Experience the taste of luxury</p>
+        </div>
+    </div>
+
+    <section class="menu" id="menu">
+        <h2>Our Special Menu</h2>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <img src="Butter Chicken.jpg" alt="Butter Chicken">
+                <h3>Butter Chicken</h3>
+                <p>Rich and creamy tomato-based curry with tender chicken</p>
+                <div class="price">₹450</div>
+            </div>
+
+            <div class="menu-item">
+                <img src="Paneer Tikka.jpg" alt="Paneer Tikka">
+                <h3>Paneer Tikka</h3>
+                <p>Marinated and grilled cottage cheese with vegetables</p>
+                <div class="price">₹350</div>
+            </div>
+
+            <div class="menu-item">
+                <img src="Dal Makhani.jpg" alt="Dal Makhani">
+                <h3>Dal Makhani</h3>
+                <p>Creamy black lentils simmered overnight</p>
+                <div class="price">₹250</div>
+            </div>
+
+            <div class="menu-item">
+                <img src="veg biryani.jpg" alt="Veg Biryani">
+                <h3>Veg Biryani</h3>
+                <p>Fragrant rice with mixed vegetables and aromatic spices</p>
+                <div class="price">₹320</div>
+            </div>
+
+            <div class="menu-item">
+                <img src="lamb curry.jpg" alt="Lamb Curry">
+                <h3>Lamb Curry</h3>
+                <p>Succulent lamb pieces cooked in a rich, spicy curry sauce</p>
+                <div class="price">₹480</div>
+            </div>
+
+            <div class="menu-item">
+                <img src="Butter Naan.jpg" alt="Butter Naan">
+                <h3>Butter Naan</h3>
+                <p>Soft and buttery traditional Indian bread</p>
+                <div class="price">₹260</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="about-container">
+            <h2>About Us</h2>
+            <div class="about-content">
+                <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9" alt="Restaurant Interior">
+                <div class="about-text">
+                    <h3>Welcome to Epic Delights</h3>
+                    <p>Established in 2020, Epic Delights has been serving authentic Indian cuisine with a modern twist. Our journey began with a simple vision - to create a dining experience that celebrates the rich flavors of India while embracing contemporary culinary innovations.</p>
+                    <p>Our expert chefs bring over 20 years of combined experience, carefully crafting each dish with hand-ground spices and locally sourced ingredients. We take pride in maintaining the traditional cooking methods while ensuring a comfortable, modern dining atmosphere.</p>
+                    <div class="highlights">
+                        <div class="highlight-item">
+                            <i class="fas fa-utensils"></i>
+                            <h4>Fresh Ingredients</h4>
+                            <p>Daily sourced local produce</p>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-award"></i>
+                            <h4>Expert Chefs</h4>
+                            <p>20+ years experience</p>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-users"></i>
+                            <h4>Happy Customers</h4>
+                            <p>1000+ satisfied guests</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <h2>Contact Us</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Location</h3>
+                        <p>169 Food Street, Cuisine Square</p>
+                        <p>palakollu, Andhra Pradesh, 534260</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <h3>Hours</h3>
+                        <p>Monday - Sunday</p>
+                        <p>11:00 AM - 11:00 PM</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <h3>Contact</h3>
+                        <p>Phone: +91 96405 37745</p>
+                        <p>Email: info@epicdelights.com</p>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <h3>Send us a Message</h3>
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="social-media">
+        <h3>Connect With Us</h3>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Epic Delights. All rights reserved.</p>
+    </footer>
+
+    <div class="auth-modal" id="signInModal">
+        <a href="#" class="close-modal"></a>
+        <div class="auth-content">
+            <a href="#" class="close-btn">&times;</a>
+            <h2>Sign In</h2>
+            <form class="auth-form">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Sign In</button>
+            </form>
+            <p class="auth-switch">Don't have an account? <a href="#signUpModal">Sign Up</a></p>
+        </div>
+    </div>
+
+    <div class="auth-modal" id="signUpModal">
+        <a href="#" class="close-modal"></a>
+        <div class="auth-content">
+            <a href="#" class="close-btn">&times;</a>
+            <h2>Sign Up</h2>
+            <form class="auth-form">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <input type="password" placeholder="Confirm Password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+            <p class="auth-switch">Already have an account? <a href="#signInModal">Sign In</a></p>
+        </div>
+    </div>
+</body>
+</html>
